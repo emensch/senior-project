@@ -9,12 +9,14 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-router.get('/stylesheet', tokenMiddleware, (req, res) => {
+router.get('/html', tokenMiddleware, (req, res) => {
     const decodedToken = req.token;
 
     token.incrementAndCheck(decodedToken, 3)
         .then(response => {
-            res.json(response);
+            const html = HtmlString.getNext();
+            console.log(html);
+            res.json({ ...response, html });
         })
         .catch(err => {
             res.status(400).send(err);

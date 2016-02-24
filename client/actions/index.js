@@ -8,7 +8,7 @@ export function sendFormData(email) {
                 dispatch(receiveToken(response));
             })
             .then(() => {
-                dispatch(requestStylesheet());
+                dispatch(requestHtml());
             });
     };
 }
@@ -31,9 +31,9 @@ export function beginPageChange(direction) {
     return function(dispatch, getState) {
         dispatch(changePage(direction));
 
-        let { currentPage, styles } = getState();
-        if (currentPage > styles.length) {
-            dispatch(requestStylesheet());
+        let { currentPage, html } = getState();
+        if (currentPage > html.length) {
+            dispatch(requestHtml());
         }
     };
 }
@@ -45,20 +45,20 @@ export function changePage(direction) {
     };
 }
 
-export function requestStylesheet() {
+export function requestHtml() {
     return function(dispatch, getState) {
-        return axios.get('/api/stylesheet', {
+        return axios.get('/api/html', {
             headers: {'x-access-token': getState().token}
         })
             .then(response => {
-                dispatch(receiveStylesheet(response));
+                dispatch(receiveHtml(response));
             });
     };    
 }
 
-export function receiveStylesheet(data) {
+export function receiveHtml(data) {
     return {
-        type: 'RECEIVE_STYLESHEET',
+        type: 'RECEIVE_HTML',
         data
     }
 }

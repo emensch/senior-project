@@ -4,7 +4,7 @@ const initialState = {
     currentPage: 1,
     voteEnabled: false,
     token: '',
-    styles: []
+    html: []
 }
 
 export default function reducer(state = initialState, action) {
@@ -25,10 +25,10 @@ export default function reducer(state = initialState, action) {
             return { ...state,
                 currentPage
             };
-        case 'RECEIVE_STYLESHEET':
+        case 'RECEIVE_HTML':
             return { ...state, 
-                styles: [ ...state.styles, 
-                    action.data.data
+                html: [ ...state.html, 
+                    action.data.data.html
                 ],
                 voteEnabled: action.data.data.voteEnabled,
                 token: action.data.data.token
@@ -37,7 +37,7 @@ export default function reducer(state = initialState, action) {
             return { ...state,
                 currentPage: 1,
                 voteEnabled: false,
-                styles: []
+                html: []
             };
         default:
             return state;
