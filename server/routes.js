@@ -14,11 +14,14 @@ router.get('/html', tokenMiddleware, (req, res) => {
 
     token.incrementAndCheck(decodedToken, 3)
         .then(response => {
-            const html = HtmlString.getNext();
-            console.log(html);
-            res.json({ ...response, html });
+            return HtmlString.getNext()
+                .then(data => {
+                    let html = data.html
+                    res.json({ ...response, html });
+                })
         })
         .catch(err => {
+            console.log(err);
             res.status(400).send(err);
         });
 });
