@@ -28,9 +28,13 @@ export function receiveToken(data) {
 }
 
 export function beginPageChange(direction) {
-    return function(dispatch) {
+    return function(dispatch, getState) {
         dispatch(changePage(direction));
-        dispatch(requestStylesheet());
+
+        let { currentPage, styles } = getState();
+        if (currentPage > styles.length) {
+            dispatch(requestStylesheet());
+        }
     };
 }
 
