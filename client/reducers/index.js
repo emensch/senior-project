@@ -2,6 +2,7 @@ const initialState = {
     email: '',
     submitted: false,
     currentPage: 1,
+    voteEnabled: false,
     token: '',
     styles: []
 }
@@ -15,6 +16,7 @@ export default function reducer(state = initialState, action) {
             };
         case 'RECEIVE_TOKEN':
             return { ...state,
+                voteEnabled: action.data.data.voteEnabled,
                 token: action.data.data.token
             };
         case 'CHANGE_PAGE':
@@ -28,6 +30,7 @@ export default function reducer(state = initialState, action) {
                 styles: [ ...state.styles, 
                     action.data.data
                 ],
+                voteEnabled: action.data.data.voteEnabled,
                 token: action.data.data.token
             };
         default:

@@ -20,8 +20,11 @@ export function verify(token) {
 
 export function incrementAndCheck(token, limit) {
     return new Promise( (resolve, reject) => {
-        if (token.numReqs <= limit) {
-            resolve(generate(token.email, ++token.numReqs));
+        if (token.numReqs < limit) {
+            const newReqs = token.numReqs + 1;
+            const voteEnabled = (newReqs === limit);
+            const data = {voteEnabled, token: generate(token.email, newReqs)}
+            resolve(data);
         } else {
             reject(new Error('limit exceeded'));
         }

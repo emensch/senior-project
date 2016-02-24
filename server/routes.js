@@ -11,8 +11,8 @@ router.get('/stylesheet', tokenMiddleware, (req, res) => {
     const decodedToken = req.token;
 
     token.incrementAndCheck(decodedToken, 3)
-        .then(token => {
-            res.json({token});
+        .then(response => {
+            res.json(response);
         })
         .catch(err => {
             res.status(400).send(err);
