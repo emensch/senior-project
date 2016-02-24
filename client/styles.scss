@@ -99,3 +99,39 @@ $button-disabled: #A3A3A3;
 
     transition: all 0.3s ease;
 }
+
+.email-form {
+    padding-top: 80px;
+
+    form {
+        @extend .card;
+
+        padding: 20px;
+        margin: auto;
+        width: 400px;
+        text-align: center;
+    }
+
+    label, input {
+        display: block;
+        width: 100%;
+
+        font-family: $font-stack;
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: $button-hover;
+    }
+
+    input {
+        border: 1px solid $button-hover;
+        border-radius: 2px;
+
+        margin: 10px 0 20px 0;
+
+        text-align: center;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
