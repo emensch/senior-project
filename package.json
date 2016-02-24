@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production babel-node server",
-    "dev": "babel-node server"
+    "dev": "babel-node server",
+    "seed": "babel-node ./server/utils/seed"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "redux-thunk": "^1.0.3",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
+    "thinky": "^2.2.4",
     "webpack": "^1.12.14"
   },
   "devDependencies": {

@@ -1,6 +1,8 @@
 import express          from 'express';
 import bodyParser       from 'body-parser';
 import * as token       from './models/token';
+import HtmlString       from './models/htmlstring';
+import Visitor          from './models/Visitor';
 import tokenMiddleware  from './utils/tokenMiddleware';
 
 const router = express.Router();
