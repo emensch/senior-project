@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node server"
+    "start": "NODE_ENV=production babel-node server",
+    "dev": "babel-node server"
   },
   "repository": {
     "type": "git",

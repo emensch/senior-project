@@ -48,7 +48,7 @@ export function changePage(direction) {
 export function requestStylesheet() {
     return function(dispatch, getState) {
         return axios.get('/api/stylesheet', {
-            headers: {'X-Access-Token': getState().token}
+            headers: {'x-access-token': getState().token}
         })
             .then(response => {
                 dispatch(receiveStylesheet(response));
@@ -57,6 +57,7 @@ export function requestStylesheet() {
 }
 
 export function receiveStylesheet(data) {
+    console.log
     return {
         type:       'RECEIVE_STYLESHEET',
         data

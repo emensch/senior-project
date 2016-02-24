@@ -2,7 +2,7 @@ const initialState = {
     email: '',
     submitted: false,
     currentPage: 1,
-    token: {},
+    token: '',
     styles: []
 }
 
@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action) {
             };
         case 'RECEIVE_TOKEN':
             return { ...state,
-                token: action.data
+                token: action.data.data.token
             };
         case 'CHANGE_PAGE':
             let newPage = action.direction ? state.currentPage + 1 : state.currentPage - 1;
@@ -26,8 +26,9 @@ export default function reducer(state = initialState, action) {
         case 'RECEIVE_STYLESHEET':
             return { ...state, 
                 styles: [ ...state.styles, 
-                    action.data
-                ]
+                    action.data.data
+                ],
+                token: action.data.data.token
             };
         default:
             return state;
