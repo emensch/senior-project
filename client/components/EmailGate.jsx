@@ -1,8 +1,9 @@
-import React        from 'react';
-import classNames   from 'classnames';
-import { connect }  from 'react-redux';
+import React            from 'react';
+import classNames       from 'classnames';
+import { connect }      from 'react-redux';
+import { submitEmail }  from '../actions';
 
-export default class EmailGate extends React.Component {
+class EmailGate extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -12,7 +13,7 @@ export default class EmailGate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({submitted: true});
+        this.props.onFormSubmit(this.state.email);
     }
 
     handleChange(e) {
@@ -22,7 +23,7 @@ export default class EmailGate extends React.Component {
     render() {
         return (
             <div {...this.props}>
-                {(this.state.submitted === true)
+                {(this.props.submitted === true)
                     ? this.props.children
                     : this.renderForm()
                 }
@@ -51,3 +52,19 @@ export default class EmailGate extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        submitted: state.submitted
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onFormSubmit: (email) => {
+            dispatch(submitEmail(email));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmailGate);
