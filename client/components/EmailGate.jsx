@@ -1,5 +1,6 @@
 import React        from 'react';
 import classNames   from 'classnames';
+import { connect }  from 'react-redux';
 
 export default class EmailGate extends React.Component {
     constructor(props) {
