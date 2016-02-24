@@ -1,7 +1,7 @@
-import React            from 'react';
-import classNames       from 'classnames';
-import { connect }      from 'react-redux';
-import { changePage }   from '../actions';
+import React                from 'react';
+import classNames           from 'classnames';
+import { connect }          from 'react-redux';
+import { beginPageChange }  from '../actions';
 
 class TopBar extends React.Component {
     render() {
@@ -43,8 +43,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onPageClick: (direction) => {
-            console.log(direction);
-            dispatch(changePage(direction));
+            dispatch(beginPageChange(direction));
         }
     }
 }

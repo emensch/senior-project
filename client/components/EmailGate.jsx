@@ -1,7 +1,7 @@
 import React            from 'react';
 import classNames       from 'classnames';
 import { connect }      from 'react-redux';
-import { submitEmail }  from '../actions';
+import { sendFormData } from '../actions';
 
 class EmailGate extends React.Component {
     constructor(props) {
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onFormSubmit: (email) => {
-            dispatch(submitEmail(email));
+            dispatch(sendFormData(email));
         }
     }
 }
