@@ -9,20 +9,20 @@ export function sendFormData(email) {
             })
             .then(() => {
                 dispatch(requestStylesheet());
-            })
+            });
     };
 }
 
 export function submitForm(email) {
     return { 
-        type:   'SUBMIT_FORM',
+        type: 'SUBMIT_FORM',
         email
     };
 }
 
 export function receiveToken(data) {
     return { 
-        type:   'RECEIVE_TOKEN',
+        type: 'RECEIVE_TOKEN',
         data
     };
 }
@@ -57,9 +57,28 @@ export function requestStylesheet() {
 }
 
 export function receiveStylesheet(data) {
-    console.log
     return {
-        type:       'RECEIVE_STYLESHEET',
+        type: 'RECEIVE_STYLESHEET',
         data
+    }
+}
+
+export function sendVote() {
+    return function(dispatch, getState) {
+        return axios.post('/api/vote', {}, {
+            headers: {'x-access-token': getState().token}
+        })
+            .then(response => {
+                dispatch(sendVoteComplete());
+            })
+            .then(() => {
+                dispatch(sendFormData(getState().email));
+            });
+    };
+}
+
+export function sendVoteComplete() {
+    return {
+        type: 'SEND_VOTE_COMPLETE'
     }
 }

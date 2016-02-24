@@ -33,6 +33,12 @@ export default function reducer(state = initialState, action) {
                 voteEnabled: action.data.data.voteEnabled,
                 token: action.data.data.token
             };
+        case 'SEND_VOTE_COMPLETE':
+            return { ...state,
+                currentPage: 1,
+                voteEnabled: false,
+                styles: []
+            };
         default:
             return state;
     }

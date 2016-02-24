@@ -1,6 +1,7 @@
 import React        from 'react';
 import classNames   from 'classnames';
 import { connect }  from 'react-redux';
+import { sendVote } from '../actions';
 
 class VoteButtonFooter extends React.Component {
     render() {
@@ -12,6 +13,7 @@ class VoteButtonFooter extends React.Component {
                 <button 
                     className={buttonClass} 
                     disabled={!this.props.btnEnabled}
+                    onClick={this.props.onVote}
                 > 
                     Vote 
                 </button>
@@ -26,4 +28,12 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(VoteButtonFooter);
+function mapDispatchToProps(dispatch) {
+    return {
+        onVote: () => {
+            dispatch(sendVote());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VoteButtonFooter);
