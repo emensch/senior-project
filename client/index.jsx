@@ -1,16 +1,19 @@
-import React            from 'react';
-import { render }       from 'react-dom';
-import { createStore }  from 'redux';
-import { Provider }     from 'react-redux';
+import React                from 'react';
+import { render }           from 'react-dom';
+import { createStore,
+         applyMiddleware }  from 'redux';
+import { Provider }         from 'react-redux';
+import createLogger         from 'redux-logger';
 
-import reducers         from './reducers';
+import reducer             from './reducers';
 import { submitEmail,
-         changePage }   from './actions';
+         changePage }       from './actions';
 
-import App              from './components/index';
+import App                  from './components/index';
 import './styles.scss';
 
-const store = createStore(reducers);
+const logger = createLogger();
+const store = createStore(reducer, applyMiddleware(logger));
 
 render(
     <Provider store={store}>
