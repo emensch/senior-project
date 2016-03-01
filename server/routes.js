@@ -16,12 +16,11 @@ router.get('/html', tokenMiddleware, (req, res) => {
         .then(response => {
             return HtmlString.getNext()
                 .then(data => {
-                    let html = data.html
+                    let html = data.html;
                     res.json({ ...response, html });
                 })
         })
         .catch(err => {
-            console.log(err);
             res.status(400).send(err);
         });
 });
@@ -31,8 +30,18 @@ router.post('/vote', tokenMiddleware, (req, res) => {
 });
 
 router.post('/session', (req, res) => {
-    const newToken = token.generate(req.body.email);
-    res.json({token: newToken});
+    const email = req.body.email;
+
+    Visitor.createIfNeeded(email)
+        .then(() => {
+            const newToken = token.generate(email);
+            res.json({token: newToken});
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        }
+    )
+
 });
 
 
