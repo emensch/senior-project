@@ -1,20 +1,20 @@
-import jwt      from 'jsonwebtoken';
-import Promise  from 'bluebird';
-
-const asyncVerify = Promise.promisify(jwt.verify, jwt);
+import Token    from '../models/token';
 
 export default function(req, res, next) {
     const token = req.headers['x-access-token'];
     console.log(token);
     if(token) {
-        asyncVerify(token, process.env.JWT_SECRET)
+        return Token.verify(token)
             .then(decoded => {
                 console.log('decoded: ', decoded);
-                req.token = decoded;
-                next();
+                return Token.get(decoded.id)
+                    .then(() => {
+                        req.token = decoded;
+                        next();
+                    });
             })
             .catch(err => {
-                res.sendStatus(401)
+                res.sendStatus(401);
             });
     } else {
         res.sendStatus(401);
