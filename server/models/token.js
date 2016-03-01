@@ -9,15 +9,24 @@ const asyncVerify = Promise.promisify(jwt.verify, jwt);
 
 const Token = thinky.createModel('Token', {
     id: type.string(),
-    email: type.string().email(),
+    email: type.string().validator(validateEmail),
     numReqs: type.number().default(0),
     htmlIDs: [type.string()]
 });
 
 Token.ensureIndex('email');
 
+function validateEmail(email) {
+    if(email !== '') {
+        return this.email
+    } else {
+        return true;
+    }
+}
+
 Token.defineStatic('generate', function(email = '', numReqs = 0, htmlIDs = []) {
     const newToken = new this({email, numReqs, htmlIDs});
+    console.log(newToken);
     return newToken.save()
         .then((token) => {
             return jwt.sign({

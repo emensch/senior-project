@@ -28,16 +28,13 @@ router.post('/session', (req, res) => {
 
     Visitor.createIfNeeded(email)
         .then(() => {
-            return Token.removeByEmail(email);
-        })
-        .then(() => {
             return Token.generate(email);
         })
         .then((token) => {
-            console.log('saved token', token);
             res.json({token});
         })
         .catch((err) => {
+            console.log(err);
             res.status(500).send(err);
         }
     )

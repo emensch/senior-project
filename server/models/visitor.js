@@ -1,3 +1,4 @@
+import Token    from './token';
 import thinky   from '../utils/thinky';
 import Promise  from 'bluebird';
 const type = thinky.type;
@@ -14,13 +15,15 @@ const Visitor = thinky.createModel('Visitor', {
 Visitor.ensureIndex('email');
 
 Visitor.defineStatic('createIfNeeded', function(email) {
-    console.log(email);
     if(email !== '') {
         return this.filter({email: email}).limit(1).run()
             .then(result => {
                 return result[0].merge({
                     logins: r.row('logins').add(1)
                 }).save();
+            })
+            .then(() => {
+                return Token.removeByEmail(email);
             })
             .catch(() => {
                 const Visitor = new this({email});
