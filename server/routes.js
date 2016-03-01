@@ -12,11 +12,7 @@ router.use(bodyParser.json());
 router.get('/html', tokenMiddleware, (req, res) => {
     Token.checkAndIncrement(req.token.id, 3)
         .then(response => {
-            return HtmlString.getNext()
-                .then(data => {
-                    let html = data.html;
-                    res.json({ ...response, html });
-                });
+            res.json(response);
         })
         .catch(err => {
             res.status(500).send(err);
