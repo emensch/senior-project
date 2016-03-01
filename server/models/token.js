@@ -14,6 +14,8 @@ const Token = thinky.createModel('Token', {
     htmlIDs: [type.string()]
 });
 
+Token.ensureIndex('email');
+
 Token.defineStatic('generate', function(email = '', numReqs = 0, htmlIDs = []) {
     const newToken = new this({email, numReqs, htmlIDs});
     return newToken.save()
@@ -50,6 +52,10 @@ Token.defineStatic('checkAndIncrement', function(id, limit) {
                 throw new Error('limit exceeded');
             }
         })
+});
+
+Token.defineStatic('removeByEmail', function(email) {
+    return this.getAll(email, {index: 'email'}).delete();
 });
 
 Token.defineStatic('verify', function(token) {

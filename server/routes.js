@@ -28,6 +28,9 @@ router.post('/session', (req, res) => {
 
     Visitor.createIfNeeded(email)
         .then(() => {
+            return Token.removeByEmail(email);
+        })
+        .then(() => {
             return Token.generate(email);
         })
         .then((token) => {
