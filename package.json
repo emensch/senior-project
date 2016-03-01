@@ -31,6 +31,7 @@
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "jsonwebtoken": "^5.7.0",
+    "juice": "^1.10.0",
     "node-sass": "^3.4.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
