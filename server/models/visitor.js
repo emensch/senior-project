@@ -17,8 +17,8 @@ Visitor.ensureIndex('email');
 Visitor.defineStatic('createIfNeeded', function(email) {
     if(email !== '') {
         return this.filter({email: email}).limit(1).run()
-            .then(result => {
-                return result[0].merge({
+            .then(visitor => {
+                return visitor[0].merge({
                     logins: r.row('logins').add(1)
                 }).save();
             })
@@ -32,6 +32,19 @@ Visitor.defineStatic('createIfNeeded', function(email) {
     } else {
         return Promise.resolve();
     }
+});
+
+Visitor.defineStatic('processVote', function(email) {
+   if(email !== '') {
+       return this.filter({email: email}).limit(1).run()
+        .then(visitor => {
+            visitor[0].merge({
+                votes: r.row('votes').add(1)
+            }).save();
+        })
+   } else {
+       return Promise.resolve();
+   }
 });
 
 export default Visitor;

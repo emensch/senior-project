@@ -20,7 +20,20 @@ router.get('/html', tokenMiddleware, (req, res) => {
 });
 
 router.post('/vote', tokenMiddleware, (req, res) => {
-    res.sendStatus(200);
+    if(req.token.voteEnabled) {
+        const htmlID = req.token.htmlIDs[req.body.index];
+        HtmlString.processVote(htmlID)
+            .then(() => {
+                Visitor.processVote(req.token.email);
+                res.sendStatus(200);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).send(err);
+            })
+    } else {
+        res.sendStatus(401);
+    }
 });
 
 router.post('/session', (req, res) => {

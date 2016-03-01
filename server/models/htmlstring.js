@@ -27,4 +27,13 @@ HtmlString.defineStatic('getNext', function() {
         });
 });
 
+HtmlString.defineStatic('processVote', function(id) {
+    return this.get(id)
+        .then(html => {
+            return html.merge({
+                fitness: r.row('fitness').add(1)
+            }).save();
+        })
+});
+
 export default HtmlString;

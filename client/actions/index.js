@@ -65,7 +65,7 @@ export function receiveHtml(data) {
 
 export function sendVote() {
     return function(dispatch, getState) {
-        return axios.post('/api/vote', {}, {
+        return axios.post('/api/vote', {index: getState().currentPage - 1}, {
             headers: {'x-access-token': getState().token}
         })
             .then(response => {

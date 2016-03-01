@@ -24,15 +24,15 @@ function validateEmail(email) {
     }
 }
 
-Token.defineStatic('generate', function(email = '', numReqs = 0, htmlIDs = []) {
-    const newToken = new this({email, numReqs, htmlIDs});
-    console.log(newToken);
+Token.defineStatic('generate', function(email = '', numReqs = 0, voteEnabled = false, htmlIDs = []) {
+    const newToken = new this({email, numReqs, voteEnabled, htmlIDs});
     return newToken.save()
         .then((token) => {
             return jwt.sign({
                 id: token.id,
                 email: token.email,
                 numReqs: token.numReqs,
+                voteEnabled: token.voteEnabled,
                 htmlIDs: token.htmlIDs
             }, process.env.JWT_SECRET, {
                 expiresIn: '1h'
@@ -52,7 +52,7 @@ Token.defineStatic('checkAndIncrement', function(id, limit) {
                         const newReqs = token.numReqs + 1;
                         const newHtmlIDs = [ ...token.htmlIDs, html.id];
                         const voteEnabled = (newReqs === limit);
-                        return this.generate(token.email, newReqs, newHtmlIDs)
+                        return this.generate(token.email, newReqs, voteEnabled, newHtmlIDs)
                             .then(token => {
                                 return {voteEnabled, token, html: html.html};
                             })
