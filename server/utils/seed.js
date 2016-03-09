@@ -1,29 +1,17 @@
+import Chromosome   from '../genetic_utils/chromosome';
 import generateHtml from './generateHtml';
 import Style        from '../models/style';
 import thinky       from './thinky';
 const r = thinky.r;
 
-//let num = 2;
-//while (num--) {
-//    new HtmlString({
-//        generation: 1,
-//        styles: {},
-//    }).save();
-//}
+r.table('Style').delete().run();
 
-new Style({
-    generation: 1,
-    styles: {contentbgcolor: '#666666'},
-}).save();
-
-new Style({
-    generation: 1,
-    styles: {contentbgcolor: '#16AA60'},
-}).save();
-
-new Style({
-    generation: 1,
-    styles: {contentbgcolor: 'transparent'},
-}).save();
+let num = 10;
+while (num--) {
+    new Style({
+        generation: 1,
+        styles: new Chromosome().getObjectRepresentation(),
+    }).save();
+}
 
 console.log('Database seeded.');
