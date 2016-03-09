@@ -9,8 +9,16 @@ const html = fs.readFileSync(path.join(__dirname, '../genetic_assets/template.ht
 const scss = fs.readFileSync(path.join(__dirname, '../genetic_assets/styles.scss'), {encoding: 'utf-8'});
 
 export default function(styleVars) {
-    return renderSass({data: scss, includePaths: ['node_modules/']})
+    const scssWithVars = genVariables(styleVars) + scss;
+    console.log(scssWithVars);
+    return renderSass({data: scssWithVars, includePaths: ['node_modules/']})
         .then(data => {
             return juice(html, {extraCss: data.css.toString(), preserveFontFaces: true, insertPreservedExtraCss: true});
         })
+}
+
+function genVariables(vars) {
+    return Object.keys(vars).map(name => {
+        return '$' + name + ': ' + vars[name] + ';';
+    }).join('\n')
 }

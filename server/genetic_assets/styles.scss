@@ -1,19 +1,27 @@
-//noinspection CssUnknownTarget
+/*
+  VARS:
+  $contentbgcolor
+*/
+
 @import "susy/sass/susy";
-//noinspection CssUnknownTarget
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+@font-face {
+  font-family: 'Sans 1';
+  src: url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+}
 
 @include global-box-sizing(border-box);
 
-body {
-  margin: 0;
-}
+$susy: (
+  container: 960px,
+  columns: 12
+);
 
 .header-container {
   width: 100%;
   padding: 20px;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Sans 1', sans-serif;
 
   .title {
     font-size: 36px;
@@ -29,7 +37,7 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Sans 1', sans-serif;
 
     li {
       display: inline-block;
@@ -40,12 +48,11 @@ body {
 
 .container {
   @include container;
-  width: 960px;
 }
 
 .element {
-  @include span(4 of 12);
-  margin-bottom: gutter(12);
+  @include span(4);
+  margin-bottom: gutter();
 
   &:nth-child(3n) {
     @include last;
@@ -58,11 +65,11 @@ body {
   }
 
   .content {
-    background-color: #aaaaaa;
+    background-color: $contentbgcolor;
 
     padding: 20px;
 
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Sans 1', sans-serif;
     font-weight: bold;
   }
 }
