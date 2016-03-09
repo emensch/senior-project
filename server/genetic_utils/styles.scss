@@ -1,0 +1,93 @@
+/*
+  VARS:
+  $contentbgcolor
+  $navfontsize
+  $contentfontsize
+  $contentfontweight
+  $gridgutters
+  $elementwidth
+  $font
+*/
+
+@import "susy/sass/susy";
+
+@font-face {
+  font-family: 'Font';
+  @if $font == 1 {
+    src: url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+  } @else if $font == 2 {
+    src: url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+  } @else if $font == 3 {
+    src: url(https://fonts.googleapis.com/css?family=Slabo:400,700);
+  } @else if $font == 4 {
+    src: url(https://fonts.googleapis.com/css?family=Lora:400,700);
+  }
+  
+}
+
+@include global-box-sizing(border-box);
+
+$susy: (
+  container: 960px,
+  columns: 12,
+  gutters: $gridgutters
+);
+
+.header-container {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Font', sans-serif;
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+.nav-container {
+  text-align: center;
+  padding: 30px;
+
+  .nav {
+    display: inline-block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Font', sans-serif;
+    font-size: $navfontsize;
+
+    li {
+      display: inline-block;
+      padding: 10px;
+    }
+  }
+}
+
+.container {
+  @include container;
+}
+
+.element {
+  @include span($elementwidth);
+  margin-bottom: gutter();
+
+  &:nth-child(#{12/$elementwidth}n) {
+    @include last;
+  }
+
+  .image {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .content {
+    background-color: $contentbgcolor;
+
+    padding: 20px;
+
+    font-family: 'Font', sans-serif;
+    font-size: $contentfontsize;
+    font-weight: $contentfontweight;
+  }
+}
