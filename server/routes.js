@@ -1,7 +1,7 @@
 import express          from 'express';
 import bodyParser       from 'body-parser';
 import Token            from './models/token';
-import HtmlString       from './models/htmlstring';
+import Style       from './models/style';
 import Visitor          from './models/Visitor';
 import tokenMiddleware  from './utils/tokenMiddleware';
 
@@ -15,6 +15,7 @@ router.get('/html', tokenMiddleware, (req, res) => {
             res.json(response);
         })
         .catch(err => {
+            console.log(err);
             res.status(500).send(err);
         })
 });
@@ -22,7 +23,7 @@ router.get('/html', tokenMiddleware, (req, res) => {
 router.post('/vote', tokenMiddleware, (req, res) => {
     if(req.token.voteEnabled) {
         const htmlID = req.token.htmlIDs[req.body.index];
-        HtmlString.processVote(htmlID)
+        Style.processVote(htmlID)
             .then(() => {
                 Visitor.processVote(req.token.email);
                 res.sendStatus(200);

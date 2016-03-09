@@ -1,7 +1,8 @@
 import jwt          from 'jsonwebtoken';
 import thinky       from '../utils/thinky';
 import Promise      from 'bluebird';
-import HtmlString   from './htmlstring'
+import Style   from './style'
+import generateHtml from '../utils/generateHtml';
 const type = thinky.type;
 const r = thinky.r;
 
@@ -47,16 +48,20 @@ Token.defineStatic('checkAndIncrement', function(id, limit) {
         })
         .then(token => {
             if(token.numReqs < limit) {
-                return HtmlString.getNext()
-                    .then((html) => {
+                return Style.getNext()
+                    .then(style => {
                         const newReqs = token.numReqs + 1;
-                        const newHtmlIDs = [ ...token.htmlIDs, html.id];
+                        const newHtmlIDs = [ ...token.htmlIDs, style.id];
                         const voteEnabled = (newReqs === limit);
                         return this.generate(token.email, newReqs, voteEnabled, newHtmlIDs)
                             .then(token => {
-                                return {voteEnabled, token, html: html.html};
+                                console.log(style.styles);
+                                return generateHtml(style.styles)
+                                    .then(html => {
+                                        return {voteEnabled, token, html: html};
+                                    })
                             })
-                })
+                    })
             } else {
                 throw new Error('limit exceeded');
             }

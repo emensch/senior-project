@@ -10,7 +10,6 @@ const scss = fs.readFileSync(path.join(__dirname, '../genetic_assets/styles.scss
 
 export default function(styleVars) {
     const scssWithVars = genVariables(styleVars) + scss;
-    console.log(scssWithVars);
     return renderSass({data: scssWithVars, includePaths: ['node_modules/']})
         .then(data => {
             return juice(html, {extraCss: data.css.toString(), preserveFontFaces: true, insertPreservedExtraCss: true});
