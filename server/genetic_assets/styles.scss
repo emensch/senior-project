@@ -1,0 +1,68 @@
+//noinspection CssUnknownTarget
+@import "susy/sass/susy";
+//noinspection CssUnknownTarget
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+@include global-box-sizing(border-box);
+
+body {
+  margin: 0;
+}
+
+.header-container {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+.nav-container {
+  text-align: center;
+  padding: 30px;
+
+  .nav {
+    display: inline-block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+
+    li {
+      display: inline-block;
+      padding: 10px;
+    }
+  }
+}
+
+.container {
+  @include container;
+  width: 960px;
+}
+
+.element {
+  @include span(4 of 12);
+  margin-bottom: gutter(12);
+
+  &:nth-child(3n) {
+    @include last;
+  }
+
+  .image {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .content {
+    background-color: #aaaaaa;
+
+    padding: 20px;
+
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+  }
+}
