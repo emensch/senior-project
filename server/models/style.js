@@ -36,4 +36,22 @@ Style.defineStatic('processVote', function(id) {
         })
 });
 
+Style.defineStatic('countVotesAndGenerate', function() {
+   return r.table('Style')
+       .max('generation')
+        .then(res => {
+            let maxGen = res.generation;
+            return r.table('Style')
+                .filter({generation: maxGen})
+                .sum('fitness')
+        })
+        .then(num => {
+            if(num > 30) {
+                return; //make new generation
+            } else {
+                return;
+            }
+        });
+});
+
 export default Style;

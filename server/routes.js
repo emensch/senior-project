@@ -26,6 +26,10 @@ router.post('/vote', tokenMiddleware, (req, res) => {
         Style.processVote(htmlID)
             .then(() => {
                 Visitor.processVote(req.token.email);
+
+            })
+            .then(() => {
+                Style.countVotesAndGenerate();
                 res.sendStatus(200);
             })
             .catch((err) => {
