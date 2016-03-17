@@ -1,9 +1,13 @@
 export default class Gene {
-    constructor(possibleValues) {
+    constructor(possibleValues, value = null) {
         this.possibleValues = possibleValues;
 
-        let idx = Math.floor(Math.random() * this.possibleValues.length)
-        this.value = possibleValues[idx];
+        if(value) {
+            this.value = value;
+        } else {
+            let idx = Math.floor(Math.random() * this.possibleValues.length)
+            this.value = possibleValues[idx];
+        }
     }
 
     getValue() {

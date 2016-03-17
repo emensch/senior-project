@@ -55,7 +55,6 @@ Token.defineStatic('checkAndIncrement', function(id, limit) {
                         const voteEnabled = (newReqs === limit);
                         return this.generate(token.email, newReqs, voteEnabled, newHtmlIDs)
                             .then(token => {
-                                console.log(style.styles);
                                 return generateHtml(style.styles)
                                     .then(html => {
                                         return {voteEnabled, token, html: html};
