@@ -1,7 +1,7 @@
 import Gene from './gene';
 
 export default class Chromosome {
-    constructor(vals = null) {
+    constructor(vals = {}) {
         this.genes = {
             contentbgcolor: new Gene(['transparent', '#A83939', '#3983A8', '#CCCCCC', '#8C8C8C'], vals.contentbgcolor),
             navfontsize: new Gene(['14px', '18px', '22px', '26px'], vals.navfontsize),
@@ -22,10 +22,32 @@ export default class Chromosome {
      */
 
     getObjectRepresentation() {
-        var obj = {};
+        let obj = {};
         Object.keys(this.genes).forEach(name => {
             return obj[name] = this.genes[name].getValue();
         });
         return obj;
+    }
+
+    static uniformCrossover(cr1, cr2, p = 0.5) {
+        let newProps = {};
+
+        Object.keys(cr1.genes).forEach(name => {
+            newProps[name] = (Math.random() < p ? cr1.genes[name] : cr2.genes[name]).getValue();
+        });
+
+        return new Chromosome(newProps);
+    }
+
+    mutate(p = 0.02) {
+
+        let newChromosome = new Chromosome(this.getObjectRepresentation());
+
+
+        Object.keys(newChromosome.genes).forEach(name => {
+            newChromosome.genes[name].mutate(p);
+        });
+
+        return newChromosome;
     }
 }
