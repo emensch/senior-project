@@ -48,7 +48,7 @@ Style.defineStatic('countVotesAndGenerate', function() {
                 .sum('fitness')
         })
         .then(num => {
-            if(num > 30) {
+            if(num > process.env.FITNESS_THRESHOLD) {
                 return this.createNewGeneration()
             } else {
                 return;
@@ -65,15 +65,15 @@ Style.defineStatic('createNewGeneration', function() {
                 .then(pop => {
                     let newPop = [];
 
-                    while(newPop.length < 10) {
+                    while(newPop.length < process.env.POP_SIZE) {
                         const indices = rouletteSelection(pop, 2);
                         const cr1ID = pop[indices[0]].id;
                         const cr1 = new Chromosome(pop[indices[0]].styles);
                         const cr2ID = pop[indices[1]].id;
                         const cr2 = new Chromosome(pop[indices[1]].styles);
 
-                        const newCr = Chromosome.uniformCrossover(cr1, cr2);
-                        newCr.mutate();
+                        const newCr = Chromosome.uniformCrossover(cr1, cr2, process.env.CROSSOVER_PERCENTAGE);
+                        newCr.mutate(process.env.MUTATION_RATE);
 
                         newPop.push({
                             generation: currentGen + 1,
