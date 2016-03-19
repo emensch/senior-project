@@ -14,10 +14,11 @@ const Style = thinky.createModel('Style', {
     createdOn: type.date().default(r.now()) 
 });
 
+Style.ensureIndex('generation');
 Style.ensureIndex('visited');
 
 Style.defineStatic('getNext', function() {
-    return this.orderBy('visited').limit(1).run()
+    return this.orderBy(r.desc('generation')).orderBy('visited').limit(1).run()
         .then(style => {
             return style[0].merge({
                 visited: r.row('visited').add(1)
