@@ -18,6 +18,7 @@ html {
 $font-stack: 'Open Sans', sans-serif;
 
 $grey: #EFEFEF;
+$error: #C10000;
 
 $button: #FFFFFF;
 $button-hover: #5A5A5A;
@@ -212,4 +213,28 @@ $button-disabled: #A3A3A3;
     p {
         text-align: justify;
     }
+}
+
+.error-popup {
+    @extend .card;
+    z-index: 20;
+
+    position: fixed;
+    width: 100%;
+    background: #FFFFFF;
+    padding: 20px;
+
+    font-family: $font-stack;
+    font-weight: bold;
+    color: $error;
+    font-size: 18px;
+    text-align: center;
+
+    transform: translateY(-110%);
+
+    &.show {
+        transform: translateY(0%);
+    }
+
+    transition: transform 0.3s ease;
 }
