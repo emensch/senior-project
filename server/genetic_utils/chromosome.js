@@ -9,7 +9,7 @@ export default class Chromosome {
             contentfontweight: new Gene(['normal', 'bold'], vals.contentfontweight),
             gridgutters: new Gene(['1/4', '1/2', '1'], vals.gridgutters),
             elementwidth: new Gene([2, 4, 6, 12], vals.elementwidth),
-            font: new Gene([1, 2, 3, 4], vals.font)
+            font: new Gene(['Open Sans', 'Raleway', 'Slabo 27px', 'Lora'], vals.font)
         };
     }
 

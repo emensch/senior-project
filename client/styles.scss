@@ -14,7 +14,8 @@ html {
 }
 
 /* ---------- VARIABLES ---------- */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
 $font-stack: 'Open Sans', sans-serif;
 
 $grey: #EFEFEF;
@@ -23,6 +24,11 @@ $error: #C10000;
 $button: #FFFFFF;
 $button-hover: #5A5A5A;
 $button-disabled: #A3A3A3;
+
+// Extra fonts for dynamic pages
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+@import url(https://fonts.googleapis.com/css?family=Lora:400,700);
 
 /* ---------- UTILITIES ---------- */
 

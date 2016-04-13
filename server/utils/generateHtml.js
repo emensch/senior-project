@@ -13,9 +13,7 @@ export default function(styleVars) {
     return renderSass({data: scssWithVars, includePaths: ['node_modules/']})
         .then(data => {
             return juice(html, {
-                extraCss: data.css.toString(),
-                preserveFontFaces: true,
-                insertPreservedExtraCss: '#dynamic-content'
+                extraCss: data.css.toString()
             });
         })
 }

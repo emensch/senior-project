@@ -49,6 +49,7 @@ Style.defineStatic('countVotesAndGenerate', function() {
         })
         .then(num => {
             if(num > process.env.FITNESS_THRESHOLD) {
+                console.log('creating new generation');
                 return this.createNewGeneration()
             } else {
                 return;

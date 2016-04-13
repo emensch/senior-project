@@ -43,7 +43,7 @@ router.post('/vote', tokenMiddleware, (req, res) => {
 
 router.post('/session', (req, res) => {
     const email = req.body.email;
-
+    
     Visitor.createIfNeeded(email)
         .then(() => {
             return Token.generate(email);

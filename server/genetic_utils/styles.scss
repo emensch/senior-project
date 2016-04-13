@@ -11,20 +11,6 @@
 
 @import "susy/sass/susy";
 
-@font-face {
-  font-family: 'Font';
-  @if $font == 1 {
-    src: url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-  } @else if $font == 2 {
-    src: url(https://fonts.googleapis.com/css?family=Raleway:400,700);
-  } @else if $font == 3 {
-    src: url(https://fonts.googleapis.com/css?family=Slabo:400,700);
-  } @else if $font == 4 {
-    src: url(https://fonts.googleapis.com/css?family=Lora:400,700);
-  }
-  
-}
-
 @include global-box-sizing(border-box);
 
 $susy: (
@@ -37,7 +23,7 @@ $susy: (
   width: 100%;
   padding: 20px;
   text-align: center;
-  font-family: 'Font', sans-serif;
+  font-family: '#{$font}', sans-serif;
 
   .title {
     font-size: 36px;
@@ -53,7 +39,7 @@ $susy: (
     list-style: none;
     padding: 0;
     margin: 0;
-    font-family: 'Font', sans-serif;
+    font-family: '#{$font}', sans-serif;
     font-size: $navfontsize;
 
     li {
@@ -86,7 +72,7 @@ $susy: (
 
     padding: 20px;
 
-    font-family: 'Font', sans-serif;
+    font-family: '#{$font}', sans-serif;
     font-size: $contentfontsize;
     font-weight: $contentfontweight;
   }
