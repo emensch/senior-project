@@ -12,7 +12,10 @@ export default function reducer(state = initialState, action) {
     switch(action.type) {
         case 'SUBMIT_FORM':
             return { ...state, 
-                email: action.email,
+                email: action.email
+            };
+        case 'SUBMIT_FORM_SUCCESS':
+            return { ...state,
                 submitted: true
             };
         case 'RECEIVE_TOKEN':

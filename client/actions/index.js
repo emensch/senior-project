@@ -10,6 +10,9 @@ export function sendFormData(email) {
             .then(() => {
                 dispatch(requestHtml());
             })
+            .then(() => {
+                dispatch(submitSuccess());
+            })
             .catch((response) => {
                 dispatch(XHRError(response));
             });
@@ -21,6 +24,12 @@ export function submitForm(email) {
         type: 'SUBMIT_FORM',
         email
     };
+}
+
+export function submitSuccess() {
+    return {
+        type: 'SUBMIT_FORM_SUCCESS'
+    }
 }
 
 export function receiveToken(data) {
