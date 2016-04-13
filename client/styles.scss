@@ -25,6 +25,8 @@ $button: #FFFFFF;
 $button-hover: #5A5A5A;
 $button-disabled: #A3A3A3;
 
+$content-width: 960px;
+
 // Extra fonts for dynamic pages
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
 @import url(https://fonts.googleapis.com/css?family=Slabo+27px);
@@ -50,6 +52,7 @@ $button-disabled: #A3A3A3;
     @extend .card;
 
     width: 100%;
+    min-width: $content-width;
     padding: 12px;
 
     background-color: $grey;
@@ -69,6 +72,8 @@ $button-disabled: #A3A3A3;
     @extend .clearfix;
 
     width: 100%;
+    min-width: $content-width;
+    margin: auto;
     min-height: 100vh;
 }
 
@@ -76,6 +81,7 @@ $button-disabled: #A3A3A3;
     @extend .card;
 
     width: 100%;
+    min-width: $content-width;
     padding: 12px;
 
     background-color: $grey;
