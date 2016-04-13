@@ -100,7 +100,9 @@ class EmailGate extends React.Component {
                         <h2> Risks and benefits: </h2>
                         <p> There are no risks associated with taking this study beyond those arising from normal computer
                             usage. There are no flashing lights or rapidly changing colors present on the site at any time.
-                            There are no benefits other than the satisfaction of contributing to the field of computer science. </p>
+                            However, the website contains static content pulled from past news. Though care has been taken
+                            to avoid objectionable content, this cannot be guaranteed. There are no benefits other than
+                            the satisfaction of contributing to the field of computer science. </p>
                         <h2> Reward ​</h2>
                         <p> If you decide to submit an email address, you will be automatically entered in a random
                             prize draw for a $50 Amazon Gift Card. Submitting a single vote is the only other
