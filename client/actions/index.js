@@ -9,6 +9,9 @@ export function sendFormData(email) {
             })
             .then(() => {
                 dispatch(requestHtml());
+            })
+            .catch((response) => {
+                dispatch(XHRError(response));
             });
     };
 }
@@ -52,6 +55,9 @@ export function requestHtml() {
         })
             .then(response => {
                 dispatch(receiveHtml(response));
+            })
+            .catch((response) => {
+                dispatch(XHRError(response));
             });
     };    
 }
@@ -73,6 +79,9 @@ export function sendVote() {
             })
             .then(() => {
                 dispatch(sendFormData(getState().email));
+            })
+            .catch((response) => {
+                dispatch(XHRError(response));
             });
     };
 }
@@ -80,5 +89,32 @@ export function sendVote() {
 export function sendVoteComplete() {
     return {
         type: 'SEND_VOTE_COMPLETE'
+    }
+}
+
+export function XHRError(error) {
+    return function(dispatch, getState) {
+        console.log(error);
+        let { errorPopup } = getState();
+
+        if(!errorPopup) {
+            dispatch(showErrorPopup());
+
+            setTimeout(() => {
+                dispatch(hideErrorPopup());
+            }, 2500);
+        }
+    };
+}
+
+export function showErrorPopup() {
+    return {
+        type: 'SHOW_ERROR_POPUP'
+    }
+}
+
+export function hideErrorPopup() {
+    return {
+        type: 'HIDE_ERROR_POPUP'
     }
 }

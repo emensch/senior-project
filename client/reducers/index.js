@@ -4,7 +4,8 @@ const initialState = {
     currentPage: 1,
     voteEnabled: false,
     token: '',
-    html: []
+    html: [],
+    errorPopup: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -39,6 +40,10 @@ export default function reducer(state = initialState, action) {
                 voteEnabled: false,
                 html: []
             };
+        case 'SHOW_ERROR_POPUP':
+            return { ...state, errorPopup: true };
+        case 'HIDE_ERROR_POPUP':
+            return { ...state, errorPopup: false };
         default:
             return state;
     }
