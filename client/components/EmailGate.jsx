@@ -97,7 +97,7 @@ class EmailGate extends React.Component {
                             vote is cast, you are considered to have completed the study. If you wish, you may continue
                             to vote; new pages are generated and displayed each time a vote is cast. At minimum, the
                             survey is expected to take no more than one minute. </p>
-                        <h2> Risks and benefits: </h2>
+                        <h2> Risks and benefits </h2>
                         <p> There are no risks associated with taking this study beyond those arising from normal computer
                             usage. There are no flashing lights or rapidly changing colors present on the site at any time.
                             However, the website contains static content pulled from past news. Though care has been taken
@@ -105,7 +105,7 @@ class EmailGate extends React.Component {
                             the satisfaction of contributing to the field of computer science. </p>
                         <h2> Reward ​</h2>
                         <p> If you decide to submit an email address, you will be automatically entered in a random
-                            prize draw for a $50 Amazon Gift Card. Submitting a single vote is the only other
+                            prize draw for a $50 Amazon Gift Card. Submitting a minimum of 10 votes is the only other
                             requirement for eligibility; further votes do not increase your chances of winning. </p>
                         <h2> Confidentiality </h2>
                         <p> All collected data is confidential. N​o information specific to you beyond an optional email
