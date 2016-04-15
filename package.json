@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production babel-node server",
+    "start": "NODE_ENV=production node ./build",
     "dev": "babel-node server",
-    "seed": "babel-node ./server/utils/seed"
+    "seed": "babel-node ./server/utils/seed",
+    "build-client": "webpack --config ./webpack.config.prod.js",
+    "build-server": "babel ./server -d ./build && rsync -avm --include='*.html' --include='*.scss' -f 'hide,! */' server/ build/",
+    "build": "npm run build-client && npm run build-server",
+    "clean": "rm -r dist build"
   },
   "repository": {
     "type": "git",
