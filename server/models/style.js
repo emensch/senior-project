@@ -12,6 +12,7 @@ const Style = thinky.createModel('Style', {
     parents: [type.string()],
     visited: type.number().default(0),
     voted: type.number().default(0),
+    visitedOn: type.date().default(null),
     createdOn: type.date().default(r.now()) 
 });
 
@@ -22,6 +23,7 @@ Style.defineStatic('getNext', function() {
     return this.orderBy(r.desc('generation')).orderBy('visited').limit(1).run()
         .then(style => {
             return style[0].merge({
+                visitedOn: r.now(),
                 visited: r.row('visited').add(1)
             }).save();
         })
