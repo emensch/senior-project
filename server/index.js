@@ -1,7 +1,7 @@
-import config   from '../env.config';
-import express  from 'express';
-import routes   from './routes';
-import path     from 'path';
+import config       from '../env.config';
+import express      from 'express';
+import controller   from './controller';
+import path         from 'path';
 
 const app = express();
 
@@ -14,7 +14,7 @@ if(process.env.NODE_ENV !== 'production') {
 
 app.use(express.static('dist'));
 
-app.use('/api', routes);
+app.use('/api', controller);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'template.html'));
