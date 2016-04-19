@@ -9,8 +9,8 @@ class TopBar extends React.Component {
         let buttonClass = classNames('nice-button');
         let labelClass = classNames('label');
 
-        let prevDisabled = (this.props.currentPage <= 1);
-        let nextDisabled = (this.props.currentPage >= 3);
+        let prevDisabled = (!this.props.readyToChangePrev);
+        let nextDisabled = (!this.props.readyToChangeNext);
 
         return (
             <div className={classes}>
@@ -36,7 +36,9 @@ class TopBar extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        currentPage: state.currentPage
+        currentPage: state.currentPage,
+        readyToChangePrev: state.readyToChangePrev,
+        readyToChangeNext: state.readyToChangeNext
     }
 }
 

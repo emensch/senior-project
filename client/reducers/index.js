@@ -2,6 +2,8 @@ const initialState = {
     email: '',
     submitted: false,
     currentPage: 1,
+    readyToChangeNext: false,
+    readyToChangePrev: false,
     voteEnabled: false,
     token: '',
     html: [],
@@ -26,11 +28,21 @@ export default function reducer(state = initialState, action) {
         case 'CHANGE_PAGE':
             let newPage = action.direction ? state.currentPage + 1 : state.currentPage - 1;
             let currentPage = Math.min(Math.max(newPage, 1), 3);
+            let readyToChangePrev = (currentPage > 1);
+            let readyToChangeNext = (currentPage < state.currentPage) || (currentPage < 3);
             return { ...state,
-                currentPage
+                currentPage,
+                readyToChangePrev,
+                readyToChangeNext
+            };
+        case 'REQUEST_HTML':
+            return { ...state,
+                readyToChangeNext: false
             };
         case 'RECEIVE_HTML':
-            return { ...state, 
+            let _readyToChangeNext = (state.currentPage < 3); // fix unfortunate block scoping issue
+            return { ...state,
+                readyToChangeNext: _readyToChangeNext,
                 html: [ ...state.html, 
                     action.data.data.html
                 ],
@@ -41,6 +53,8 @@ export default function reducer(state = initialState, action) {
             return { ...state,
                 currentPage: 1,
                 voteEnabled: false,
+                readyToChangeNext: false,
+                readyToChangePrev: false,
                 html: []
             };
         case 'SHOW_ERROR_POPUP':

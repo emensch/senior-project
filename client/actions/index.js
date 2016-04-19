@@ -8,7 +8,7 @@ export function sendFormData(email) {
                 dispatch(receiveToken(response));
             })
             .then(() => {
-                dispatch(requestHtml());
+                dispatch(fetchHtml());
             })
             .then(() => {
                 dispatch(submitSuccess());
@@ -41,11 +41,13 @@ export function receiveToken(data) {
 
 export function beginPageChange(direction) {
     return function(dispatch, getState) {
-        dispatch(changePage(direction));
+        let { readyToChange } = getState();
 
+        dispatch(changePage(direction));
         let { currentPage, html } = getState();
+
         if (currentPage > html.length) {
-            dispatch(requestHtml());
+            dispatch(fetchHtml());
         }
     };
 }
@@ -57,8 +59,9 @@ export function changePage(direction) {
     };
 }
 
-export function requestHtml() {
+export function fetchHtml() {
     return function(dispatch, getState) {
+        dispatch(requestHtml());
         return axios.get('/api/html', {
             headers: {'x-access-token': getState().token}
         })
@@ -69,6 +72,12 @@ export function requestHtml() {
                 dispatch(XHRError(response));
             });
     };    
+}
+
+export function requestHtml() {
+    return {
+        type: 'REQUEST_HTML'
+    }
 }
 
 export function receiveHtml(data) {
