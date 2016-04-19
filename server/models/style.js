@@ -11,6 +11,7 @@ const Style = thinky.createModel('Style', {
     fitness: type.number().default(1),
     parents: [type.string()],
     visited: type.number().default(0),
+    voted: type.number().default(0),
     createdOn: type.date().default(r.now()) 
 });
 
@@ -35,6 +36,18 @@ Style.defineStatic('processVote', function(id) {
             return style.merge({
                 fitness: r.row('fitness').add(1)
             }).save();
+        })
+});
+
+Style.defineStatic('markVoted', function(ids) {
+    return this.getAll(r.args(ids))
+        .then(styles => {
+            let newStyles = styles.map(style => {
+                style.voted++;
+                return style;
+            })
+
+            return this.save(newStyles, {conflict: 'update'});
         })
 });
 

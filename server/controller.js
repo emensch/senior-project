@@ -15,7 +15,7 @@ router.get('/html', tokenMiddleware, (req, res) => {
             res.json(response);
         })
         .catch(err => {
-            console.log(err);
+            console.log(err.stack);
             res.status(500).send(err);
         })
 });
@@ -26,14 +26,16 @@ router.post('/vote', tokenMiddleware, (req, res) => {
         Style.processVote(htmlID)
             .then(() => {
                 Visitor.processVote(req.token.email);
-
+            })
+            .then(() => {
+                Style.markVoted(req.token.htmlIDs);
             })
             .then(() => {
                 Style.countVotesAndGenerate();
                 res.sendStatus(200);
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err.stack);
                 res.status(500).send(err);
             })
     } else {
@@ -52,7 +54,7 @@ router.post('/session', (req, res) => {
             res.json({token});
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err.stack);
             res.status(500).send(err);
         }
     )
