@@ -1,6 +1,7 @@
 import thinky       from '../utils/thinky';
 import Promise      from 'bluebird';
 import Chromosome   from '../genetic_utils/chromosome';
+import * as logger  from 'winston';
 const type = thinky.type;
 const r = thinky.r;
 
@@ -48,8 +49,7 @@ Style.defineStatic('countVotesAndGenerate', function() {
                 .sum('fitness')
         })
         .then(num => {
-            if(num > process.env.FITNESS_THRESHOLD) {
-                console.log('creating new generation');
+            if(num > (parseInt(process.env.FITNESS_THRESHOLD) + parseInt(process.env.POP_SIZE))) {
                 return this.createNewGeneration()
             } else {
                 return;
@@ -62,6 +62,7 @@ Style.defineStatic('createNewGeneration', function() {
         .max('generation')
         .then(res => {
             let currentGen = res.generation;
+            logger.info('Creating generation ' + (currentGen + 1));
             return this.filter({generation: currentGen}).execute()
                 .then(pop => {
                     let newPop = [];

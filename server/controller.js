@@ -1,9 +1,10 @@
 import express          from 'express';
 import bodyParser       from 'body-parser';
 import Token            from './models/token';
-import Style       from './models/style';
+import Style            from './models/style';
 import Visitor          from './models/Visitor';
 import tokenMiddleware  from './utils/tokenMiddleware';
+import * as logger      from 'winston';
 
 const router = express.Router();
 
@@ -15,8 +16,8 @@ router.get('/html', tokenMiddleware, (req, res) => {
             res.json(response);
         })
         .catch(err => {
-            console.log(err.stack);
-            res.status(500).send(err);
+            logger.error(err.stack);
+            res.sendStatus(500);
         })
 });
 
@@ -32,8 +33,8 @@ router.post('/vote', tokenMiddleware, (req, res) => {
                 res.sendStatus(200);
             })
             .catch((err) => {
-                console.log(err.stack);
-                res.status(500).send(err);
+                logger.error(err.stack);
+                res.sendStatus(500);
             })
     } else {
         res.sendStatus(401);
@@ -51,8 +52,8 @@ router.post('/session', (req, res) => {
             res.json({token});
         })
         .catch((err) => {
-            console.log(err.stack);
-            res.status(500).send(err);
+            logger.error(err.stack);
+            res.sendStatus(500);
         }
     )
 });

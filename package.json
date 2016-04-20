@@ -46,7 +46,9 @@
     "style-loader": "^0.13.0",
     "susy": "^2.2.12",
     "thinky": "^2.2.4",
-    "webpack": "^1.12.14"
+    "webpack": "^1.12.14",
+    "winston": "^2.2.0",
+    "winston-rethinkdb": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",

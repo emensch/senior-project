@@ -1,9 +1,17 @@
 import config       from '../env.config';
 import express      from 'express';
+import thinky       from './utils/thinky';
 import controller   from './controller';
 import path         from 'path';
+import * as logger  from 'winston';
+import { RethinkDB } from 'winston-rethinkdb';
 
 const app = express();
+
+logger.add(RethinkDB, {
+    db: process.env.RETHINK_DBNAME,
+    options: () => thinky.r
+});
 
 if(process.env.NODE_ENV !== 'production') {
     const webpackConfig = require('../webpack.config.dev');
@@ -23,5 +31,5 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log('Server listening on: ' + PORT);
+    logger.info('Server listening on port ' + PORT);
 })
