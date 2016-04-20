@@ -3,23 +3,20 @@ import Gene from './gene';
 export default class Chromosome {
     constructor(vals = {}) {
         this.genes = {
-            contentbgcolor: new Gene(['transparent', '#A83939', '#3983A8', '#CCCCCC', '#8C8C8C'], vals.contentbgcolor),
-            navfontsize: new Gene(['14px', '18px', '22px', '26px'], vals.navfontsize),
-            contentfontsize: new Gene(['12px', '18px', '24px', '36px'], vals.contentfontsize),
-            contentfontweight: new Gene(['normal', 'bold'], vals.contentfontweight),
             gridgutters: new Gene(['1/4', '1/2', '1'], vals.gridgutters),
-            elementwidth: new Gene([2, 4, 6, 12], vals.elementwidth),
-            font: new Gene(['Open Sans', 'Raleway', 'Slabo 27px', 'Lora'], vals.font)
+            elementwidth: new Gene([3, 4, 6], vals.elementwidth),
+            navbgcolor: new Gene(['transparent', '#A83939', '#3983A8', '#CCCCCC', '#8C8C8C'], vals.navbgcolor),
+            navelementborders: new Gene(['1px', '0px'], vals.navelementborders),
+            navfont: new Gene(['Open Sans', 'Raleway', 'Slabo 27px', 'Lora'], vals.navfont),
+            navfontsize: new Gene(['14px', '18px', '22px'], vals.navfontsize),
+            navfontweight: new Gene(['normal', 'bold'], vals.navfontweight),
+            contentbgcolor: new Gene(['transparent', '#A83939', '#3983A8', '#CCCCCC', '#8C8C8C'], vals.contentbgcolor),
+            contentstyle: new Gene(['overlap', 'normal'], vals.contentstyle),
+            contentfont: new Gene(['Open Sans', 'Raleway', 'Slabo 27px', 'Lora'], vals.contentfont),
+            contentfontsize: new Gene(['14px', '18px', '22px'], vals.contentfontsize),
+            contentfontweight: new Gene(['normal', 'bold'], vals.contentfontweight)
         };
     }
-
-    /*
-     VARS:
-     $contentbgcolor
-     $contentfontsize
-     $contentfontweight
-     $gridgutters
-     */
 
     getObjectRepresentation() {
         let obj = {};

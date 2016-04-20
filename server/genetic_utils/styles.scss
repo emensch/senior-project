@@ -1,12 +1,28 @@
-/*
-  VARS:
-  $contentbgcolor
-  $navfontsize
-  $contentfontsize
-  $contentfontweight
-  $gridgutters
-  $elementwidth
-  $font
+@function calc-font-color($color) {
+  $_computedcolor: #FFFFFF;
+
+  @if opacity($color) == 0 or (lightness($color) / 100% > 0.18) {
+    $_computedcolor: #000000;
+  }
+
+  @return $_computedcolor;
+}
+
+/* VARS:
+  $gridgutters - 1/2, 1/4, 1
+  $elementwidth: - 3, 4, 6
+
+  $navbgcolor - transparent,
+  $navelementborders - 0px, 1px
+  $navfont - Raleway, Open Sans, Lora, Slabo 27px
+  $navfontsize - 14px, 18px, 22px
+  $navfontweight - normal, bold
+
+  $contentbgcolor - transparent,
+  $contentstyle: - overlap, normal
+  $contentfont: - Raleway, Open Sans, Lora, Slabo 27px
+  $contentfontsize - 14px, 18px, 22px
+  $contentfontweight - normal, bold
 */
 
 @import "susy/sass/susy";
@@ -19,32 +35,26 @@ $susy: (
   gutters: $gridgutters
 );
 
-.header-container {
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  font-family: '#{$font}', sans-serif;
-
-  .title {
-    font-size: 36px;
-  }
-}
-
 .nav-container {
+  background: $navbgcolor;
   text-align: center;
-  padding: 30px;
+  padding: 10px;
+  margin-bottom: 20px;
 
   .nav {
     display: inline-block;
     list-style: none;
     padding: 0;
     margin: 0;
-    font-family: '#{$font}', sans-serif;
+    font-family: $navfont;
     font-size: $navfontsize;
+    font-weight: $navfontweight;
+    color: calc-font-color($navbgcolor);
 
     li {
       display: inline-block;
       padding: 10px;
+      border-right: $navelementborders solid calc-font-color($navbgcolor);
     }
   }
 }
@@ -55,25 +65,67 @@ $susy: (
 
 .element {
   @include span($elementwidth);
+  position: relative;
   margin-bottom: gutter();
+
+  $_baseheight: 360px;
+  @if $elementwidth == 3 {
+    $_baseheight: 180px;
+  } @else if $elementwidth == 4 {
+    $_baseheight: 240px;
+  }
+
+  @if $elementwidth == 3 and $contentstyle == 'normal' {
+    $_fontmodifier: 80px + (($contentfontsize - 14) / 4 * 50);
+    @if $contentfont == 'Open Sans' {
+      @if $contentfontweight == bold {
+        $_fontmodifier: $_fontmodifier + 20;
+      } @else {
+        $_fontmodifier: $_fontmodifier + 10;
+      }
+    } @else if $contentfont == 'Lora' or $contentfont == 'Slabo 27px' {
+      $_fontmodifier: $_fontmodifier + 15;
+    }
+
+    $_guttermodifier: 0px;
+
+    @if $gridgutters == 1 {
+      $_guttermodifier: 25px;
+    }
+
+    min-height: $_baseheight + $_fontmodifier + $_guttermodifier;
+  }
 
   &:nth-child(#{12/$elementwidth}n) {
     @include last;
   }
 
   .image {
-    height: 240px;
+    height: $_baseheight;
     background-size: cover;
     background-position: center;
   }
 
   .content {
-    background-color: $contentbgcolor;
-
     padding: 20px;
 
-    font-family: '#{$font}', sans-serif;
+    font-family: $contentfont;
     font-size: $contentfontsize;
     font-weight: $contentfontweight;
+    color: calc-font-color($contentbgcolor);
+
+    @if $contentstyle == 'overlap' {
+      @if $contentbgcolor != transparent {
+        background-color: rgba($contentbgcolor, 0.9);
+      } @else {
+        background-color: $contentbgcolor;
+      }
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    } @elseif $contentstyle == 'normal' {
+      background-color: $contentbgcolor;
+      position: relative;
+    }
   }
 }
