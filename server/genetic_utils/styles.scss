@@ -77,13 +77,13 @@ $susy: (
 
   @if $elementwidth == 3 and $contentstyle == 'normal' {
     $_fontmodifier: 80px + (($contentfontsize - 14) / 4 * 50);
-    @if $contentfont == 'Open Sans' {
+    @if '#{$contentfont}' == 'Open Sans' {
       @if $contentfontweight == bold {
         $_fontmodifier: $_fontmodifier + 20;
       } @else {
         $_fontmodifier: $_fontmodifier + 10;
       }
-    } @else if $contentfont == 'Lora' or $contentfont == 'Slabo 27px' {
+    } @else if '#{$contentfont}' == 'Lora' or '#{$contentfont}' == 'Slabo 27px' {
       $_fontmodifier: $_fontmodifier + 15;
     }
 
@@ -109,7 +109,7 @@ $susy: (
   .content {
     padding: 20px;
 
-    font-family: $contentfont;
+    font-family: '#{$contentfont}';
     font-size: $contentfontsize;
     font-weight: $contentfontweight;
     color: calc-font-color($contentbgcolor);
