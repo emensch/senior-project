@@ -1,7 +1,7 @@
 @function calc-font-color($color) {
   $_computedcolor: #FFFFFF;
 
-  @if opacity($color) == 0 or (lightness($color) / 100% > 0.18) {
+  @if opacity($color) == 0 or (lightness($color) / 100% > 0.26) {
     $_computedcolor: #000000;
   }
 
@@ -12,13 +12,13 @@
   $gridgutters - 1/2, 1/4, 1
   $elementwidth: - 3, 4, 6
 
-  $navbgcolor - transparent,
+  $navbgcolor - #607D8B, #C1362C, #FFFFFF, #E0E0E0, #424242
   $navelementborders - 0px, 1px
   $navfont - Raleway, Open Sans, Lora, Slabo 27px
   $navfontsize - 14px, 18px, 22px
   $navfontweight - normal, bold
 
-  $contentbgcolor - transparent,
+  $contentbgcolor - #607D8B, #C1362C, #FFFFFF, #E0E0E0, #424242
   $contentstyle: - overlap, normal
   $contentfont: - Raleway, Open Sans, Lora, Slabo 27px
   $contentfontsize - 14px, 18px, 22px
