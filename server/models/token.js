@@ -48,7 +48,7 @@ Token.defineStatic('checkAndIncrement', function(id, limit) {
         })
         .then(token => {
             if(token.numReqs < limit) {
-                return Style.getNext()
+                return Style.getNext(token.htmlIDs)
                     .then(style => {
                         const newReqs = token.numReqs + 1;
                         const newHtmlIDs = [ ...token.htmlIDs, style.id];

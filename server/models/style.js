@@ -18,16 +18,29 @@ const Style = thinky.createModel('Style', {
 Style.ensureIndex('generation');
 Style.ensureIndex('visited');
 
-Style.defineStatic('getNext', function() {
-    return this.orderBy(r.desc('generation')).orderBy('visited').limit(1).run()
+Style.defineStatic('getNext', function(ids) {
+    return r.table('Style')
+        .min({index: 'visited'})('visited').do( function(minvisited) {
+            return {
+                maxgeneration: r.table('Style').max({index: 'generation'})('generation'),
+                minvisited: minvisited
+            }
+        })
+        .then(vals => {
+            return this.getAll(r.args(r.table('Style')('id').coerceTo('array').difference(ids)))
+                .filter({generation: vals.maxgeneration})
+                .filter({visited: vals.minvisited})
+                .sample(1)
+                .run()
+        })
         .then(style => {
             return style[0].merge({
                 visited: r.row('visited').add(1)
-            }).save();
+            }).save()
         })
         .then(style => {
             return style.getOldValue();
-        });
+        })
 });
 
 Style.defineStatic('processVote', function(id) {
