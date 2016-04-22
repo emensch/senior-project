@@ -8,12 +8,14 @@ import { RethinkDB } from 'winston-rethinkdb';
 
 const app = express();
 
+const dev = (process.env.NODE_ENV !== 'production');
+
 logger.add(RethinkDB, {
     db: process.env.RETHINK_DBNAME,
     options: () => thinky.r
 });
 
-if(process.env.NODE_ENV !== 'production') {
+if(dev) {
     const webpackConfig = require('../webpack.config.dev');
     const compiler = require('webpack')(webpackConfig);
     app.use(require('webpack-dev-middleware')(compiler, { noInfo: true }));
@@ -25,7 +27,20 @@ app.use(express.static('dist'));
 app.use('/api', controller);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'template.html'));
+    res.send(`
+<!doctype html>
+<html>
+    <head>
+        <title> Genetic Pages </title>
+        ${dev ? '' : '<link rel=\'stylesheet\' href=\'/styles.css\'>'}
+    </head>
+    <body>
+        <div id='root'></div>
+        <script src='/bundle.js'></script>
+    </body>
+</html>
+    `);
+
 });
 
 const PORT = process.env.PORT || 3000;

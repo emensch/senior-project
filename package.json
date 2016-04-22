@@ -34,6 +34,7 @@
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
+    "extract-text-webpack-plugin": "^1.0.1",
     "jsonwebtoken": "^5.7.0",
     "juice": "^1.10.0",
     "node-sass": "^3.4.2",
