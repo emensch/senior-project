@@ -191,7 +191,7 @@ $content-width: 960px;
 }
 
 .consent-popup {
-    display: none;
+    display: block;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -199,10 +199,6 @@ $content-width: 960px;
     background: rgba(0, 0, 0, 0.5);
     z-index: 10;
     padding: 40px;
-
-    &.show {
-        display: block;
-    }
 }
 
 .popup-content {
