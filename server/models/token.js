@@ -12,7 +12,8 @@ const Token = thinky.createModel('Token', {
     id: type.string(),
     email: type.string().validator(validateEmail),
     numReqs: type.number().default(0),
-    htmlIDs: [type.string()]
+    htmlIDs: [type.string()],
+    createdOn: type.date().default(r.now())
 });
 
 Token.ensureIndex('email');
