@@ -20,16 +20,16 @@ Style.ensureIndex('visited');
 
 Style.defineStatic('getNext', function(ids) {
     return r.table('Style')
-        .min({index: 'visited'})('visited').do( function(minvisited) {
+        .min({index: 'visited'})('visited').do( function(minVisited) {
             return {
-                maxgeneration: r.table('Style').max({index: 'generation'})('generation'),
-                minvisited: minvisited
-            }
+                currentGen: r.table('Style').max({index: 'generation'})('generation'),
+                minVisited: minVisited
+            };
         })
         .then(vals => {
             return this.getAll(r.args(r.table('Style')('id').coerceTo('array').difference(ids)))
-                .filter({generation: vals.maxgeneration})
-                .filter({visited: vals.minvisited})
+                .filter({generation: vals.currentGen})
+                .filter({visited: vals.minVisited})
                 .sample(1)
                 .run()
         })
@@ -44,22 +44,15 @@ Style.defineStatic('getNext', function(ids) {
 });
 
 Style.defineStatic('processVote', function(id) {
-    return this.get(id)
-        .then(style => {
-            return style.merge({
-                fitness: r.row('fitness').add(1)
-            }).save();
-        })
+    return this.get(id).update({
+        fitness: r.row('fitness').add(1)
+    })
 });
 
 Style.defineStatic('countVotesAndGenerate', function() {
     return r.table('Style')
-        .max('generation')
-        .then(res => {
-            let currentGen = res.generation;
-            return r.table('Style')
-                .filter({generation: currentGen})
-                .sum('fitness')
+        .max({index: 'generation'})('generation').do( function(currentGen) {
+            return r.table('Style').filter({generation: currentGen}).sum('fitness');
         })
         .then(num => {
             if(num > (parseInt(process.env.FITNESS_THRESHOLD) + parseInt(process.env.POP_SIZE))) {
