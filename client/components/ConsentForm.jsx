@@ -14,7 +14,7 @@ export default class ConsentForm extends React.Component {
     }
 
     renderContent() {
-        let popupClass = classNames('consent-popup');
+        let popupClass = classNames('info-popup');
         let popupContentClass = classNames('popup-content');
         let buttonClass = classNames('nice-button');
 

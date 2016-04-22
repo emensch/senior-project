@@ -1,6 +1,7 @@
 import React            from 'react';
 import classNames       from 'classnames';
-import ConsentForm      from './ConsentForm'
+import ConsentForm      from './ConsentForm';
+import Instructions     from './Instructions';
 import { connect }      from 'react-redux';
 import { sendFormData } from '../actions';
 
@@ -10,12 +11,16 @@ class EmailGate extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleConsent = this.toggleConsent.bind(this);
-        this.state = {email: '', submitted: false, showConsent: false};
+        this.toggleInstructions = this.toggleInstructions.bind(this);
+        this.state = {email: '', submitted: false, showConsent: false, showInstructions: false};
     }
 
     handleSubmit(e) {
         e.preventDefault();
         this.props.onFormSubmit(this.state.email);
+        this.setState(() => {
+            return {showConsent: false, showInstructions: false};
+        })
     }
 
     handleChange(e) {
@@ -24,9 +29,15 @@ class EmailGate extends React.Component {
 
     toggleConsent(e) {
         e.preventDefault();
-        //this.setState({ showConsent: true });
         this.setState((prev) => {
-            return {showConsent: !prev.showConsent};
+            return {showConsent: !prev.showConsent, showInstructions: false};
+        })
+    }
+
+    toggleInstructions(e) {
+        e.preventDefault();
+        this.setState((prev) => {
+            return {showInstructions: !prev.showInstructions, showConsent: false}
         })
     }
 
@@ -45,7 +56,7 @@ class EmailGate extends React.Component {
         let containerClass = classNames('email-form-container');
         let classes = classNames('email-form');
         let buttonClass = classNames('nice-button');
-        let showConsentClass = classNames('show-consent');
+        let secondaryButtonClass = classNames('secondary-button');
 
         return (
             <div>
@@ -59,14 +70,18 @@ class EmailGate extends React.Component {
                                 onChange={this.handleChange}
                             />
                             <button className={buttonClass}>
-                                Submit
+                                Begin
                             </button>
                         </form>
-                        <button className={showConsentClass} onClick={this.toggleConsent}>
+                        <button className={secondaryButtonClass} onClick={this.toggleInstructions}>
+                            Instructions
+                        </button>
+                        <button className={secondaryButtonClass} onClick={this.toggleConsent}>
                             Consent Information
                         </button>
                     </div>
                 </div>
+                <Instructions show={this.state.showInstructions} onClick={this.toggleInstructions}/>
                 <ConsentForm show={this.state.showConsent} onClick={this.toggleConsent}/>
             </div>
         )
