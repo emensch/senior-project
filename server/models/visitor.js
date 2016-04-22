@@ -7,7 +7,6 @@ const r = thinky.r;
 const Visitor = thinky.createModel('Visitor', {
     id: type.string(),
     email: type.string().email(),
-    logins: type.number().default(1),
     votes: type.number().default(0),
     createdOn: type.date().default(r.now()) 
 });
@@ -16,19 +15,18 @@ Visitor.ensureIndex('email');
 
 Visitor.defineStatic('createIfNeeded', function(email) {
     if(email !== '') {
-        return this.filter({email: email}).limit(1).run()
-            .then(visitor => {
-                return visitor[0].merge({
-                    logins: r.row('logins').add(1)
-                }).save();
+        return this.filter({email: email}).count().execute()
+            .then(num => {
+                if(!num) {
+                    const Visitor = new this({email});
+                    return Visitor.save();
+                } else {
+                    return Promise.resolve();
+                }
             })
             .then(() => {
                 return Token.removeByEmail(email);
             })
-            .catch(() => {
-                const Visitor = new this({email});
-                return Visitor.save();
-            });
     } else {
         return Promise.resolve();
     }
@@ -36,14 +34,11 @@ Visitor.defineStatic('createIfNeeded', function(email) {
 
 Visitor.defineStatic('processVote', function(email) {
    if(email !== '') {
-       return this.filter({email: email}).limit(1).run()
-        .then(visitor => {
-            visitor[0].merge({
-                votes: r.row('votes').add(1)
-            }).save();
-        })
+        return r.table('Visitor').filter({email: email}).limit(1).update({
+            votes: r.row('votes').add(1)
+        }).run()
    } else {
-       return Promise.resolve();
+        return Promise.resolve();
    }
 });
 
