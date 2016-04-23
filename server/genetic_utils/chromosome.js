@@ -5,16 +5,18 @@ export default class Chromosome {
         this.genes = {
             gridgutters: new Gene(['1/4', '1/2', '1'], vals.gridgutters),
             elementwidth: new Gene([3, 4, 6], vals.elementwidth),
-            navbgcolor: new Gene(['#607D8B', '#C1362C', '#FFFFFF', '#E0E0E0', '#424242'], vals.navbgcolor),
+            navbgcolor: new Gene(['#607D8B', '#C1362C', '#FFFFFF', '#E0E0E0', '#424242', '#99E0FF', '#E37222'], vals.navbgcolor),
             navelementborders: new Gene(['1px', '0px'], vals.navelementborders),
             navfont: new Gene(['Open Sans', 'Raleway', 'Slabo 27px', 'Lora'], vals.navfont),
             navfontsize: new Gene(['14px', '18px', '22px'], vals.navfontsize),
             navfontweight: new Gene(['normal', 'bold'], vals.navfontweight),
-            contentbgcolor: new Gene(['#607D8B', '#C1362C', '#FFFFFF', '#E0E0E0', '#424242'], vals.contentbgcolor),
+            navshadow: new Gene(['true', 'false'], vals.navshadow),
+            contentbgcolor: new Gene(['#607D8B', '#C1362C', '#FFFFFF', '#E0E0E0', '#424242', '#99E0FF', '#E37222'], vals.contentbgcolor),
             contentstyle: new Gene(['overlap', 'normal'], vals.contentstyle),
             contentfont: new Gene(['Open Sans', 'Raleway', 'Slabo 27px', 'Lora'], vals.contentfont),
             contentfontsize: new Gene(['14px', '18px', '22px'], vals.contentfontsize),
-            contentfontweight: new Gene(['normal', 'bold'], vals.contentfontweight)
+            contentfontweight: new Gene(['normal', 'bold'], vals.contentfontweight),
+            contentshadow: new Gene(['true', 'false'], vals.contentshadow)
         };
     }
 

@@ -12,17 +12,19 @@
   $gridgutters - 1/2, 1/4, 1
   $elementwidth: - 3, 4, 6
 
-  $navbgcolor - #607D8B, #C1362C, #FFFFFF, #E0E0E0, #424242
+  $navbgcolor - #607D8B, #C1362C, #FFFFFF, #E0E0E0, #424242, #99E0FF, #E37222
   $navelementborders - 0px, 1px
   $navfont - Raleway, Open Sans, Lora, Slabo 27px
   $navfontsize - 14px, 18px, 22px
   $navfontweight - normal, bold
+  $navshadow - true, false
 
-  $contentbgcolor - #607D8B, #C1362C, #FFFFFF, #E0E0E0, #424242
+  $contentbgcolor - #607D8B, #C1362C, #FFFFFF, #E0E0E0, #424242, #99E0FF, #E37222
   $contentstyle: - overlap, normal
   $contentfont: - Raleway, Open Sans, Lora, Slabo 27px
   $contentfontsize - 14px, 18px, 22px
   $contentfontweight - normal, bold
+  $contentshadow - true, false
 */
 
 @import "susy/sass/susy";
@@ -35,11 +37,19 @@ $susy: (
   gutters: $gridgutters
 );
 
+.shadow {
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16);
+}
+
 .nav-container {
   background: $navbgcolor;
   text-align: center;
   padding: 10px;
   margin-bottom: 20px;
+
+  @if $navshadow == true {
+    @extend .shadow;
+  }
 
   .nav {
     display: inline-block;
@@ -63,7 +73,7 @@ $susy: (
   @include container;
 }
 
-.element {
+.element-container {
   @include span($elementwidth);
   position: relative;
   margin-bottom: gutter();
@@ -128,6 +138,12 @@ $susy: (
     } @elseif $contentstyle == 'normal' {
       background-color: $contentbgcolor;
       position: relative;
+    }
+  }
+
+  .element {
+    @if $contentshadow == true {
+      @extend .shadow;
     }
   }
 }
