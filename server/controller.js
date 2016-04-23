@@ -2,7 +2,7 @@ import express          from 'express';
 import bodyParser       from 'body-parser';
 import Token            from './models/token';
 import Style            from './models/style';
-import Visitor          from './models/Visitor';
+import Visitor          from './models/visitor';
 import tokenMiddleware  from './utils/tokenMiddleware';
 import * as logger      from 'winston';
 

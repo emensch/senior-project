@@ -89,7 +89,9 @@ $susy: (
 
     $_guttermodifier: 0px;
 
-    @if $gridgutters == 1 {
+    @if $gridgutters == 1/2 {
+      $_guttermodifier: 10px;
+    } @else if $gridgutters == 1 {
       $_guttermodifier: 25px;
     }
 
