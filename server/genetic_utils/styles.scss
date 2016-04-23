@@ -102,7 +102,7 @@ $susy: (
     @if $gridgutters == 1/2 {
       $_guttermodifier: 10px;
     } @else if $gridgutters == 1 {
-      $_guttermodifier: 25px;
+      $_guttermodifier: 26px;
     }
 
     min-height: $_baseheight + $_fontmodifier + $_guttermodifier;
