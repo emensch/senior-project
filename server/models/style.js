@@ -2,6 +2,8 @@ import thinky       from '../utils/thinky';
 import Promise      from 'bluebird';
 import Chromosome   from '../genetic_utils/chromosome';
 import * as logger  from 'winston';
+import * as state   from '../utils/appState';
+
 const type = thinky.type;
 const r = thinky.r;
 
@@ -58,17 +60,31 @@ Style.defineStatic('processVote', function(id) {
 });
 
 Style.defineStatic('countVotesAndGenerate', function() {
-    return r.table('Style')
-        .max({index: 'generation'})('generation').do( function(currentGen) {
-            return r.table('Style').filter({generation: currentGen}).sum('fitness');
-        })
-        .then(num => {
-            if(num > (parseInt(process.env.FITNESS_THRESHOLD) + parseInt(process.env.POP_SIZE))) {
-                return this.createNewGeneration()
+    return state.getState('generating')
+        .then(generating => {
+            if(generating != 'true') {
+                return r.table('Style')
+                    .max({index: 'generation'})('generation').do( function(currentGen) {
+                        return r.table('Style').filter({generation: currentGen}).sum('fitness');
+                    })
+                    .then(num => {
+                        if(num > (parseInt(process.env.FITNESS_THRESHOLD) + parseInt(process.env.POP_SIZE))) {
+                            return state.setState('generating', 'true')
+                                .then(() => {
+                                    return this.createNewGeneration();
+                                })
+                                .finally(() => {
+                                    return state.setState('generating', 'false');
+                                })
+                        } else {
+                            return Promise.resolve();
+                        }
+                    });
             } else {
-                return;
+                logger.info('Not counting fitness - generation in-progress')
+                return Promise.resolve();
             }
-        });
+        })
 });
 
 Style.defineStatic('createNewGeneration', function() {
