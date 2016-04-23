@@ -34,6 +34,14 @@ Style.defineStatic('getNext', function(ids) {
                 .run()
         })
         .then(style => {
+            if(style.length) {
+                return Promise.resolve(style);
+            } else {
+                logger.error('Failed random selection - fallback to normal');
+                return this.orderBy(r.desc('generation')).orderBy('visited').limit(1).run()
+            }
+        })
+        .then(style => {
             return style[0].merge({
                 visited: r.row('visited').add(1)
             }).save()
