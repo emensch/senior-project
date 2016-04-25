@@ -6,6 +6,7 @@ import * as state   from '../utils/appState';
 
 const type = thinky.type;
 const r = thinky.r;
+const Query = thinky.Query;
 
 const Style = thinky.createModel('Style', {
     id: type.string(),
@@ -22,10 +23,10 @@ Style.ensureIndex('visited');
 
 Style.defineStatic('getNext', function(ids) {
     return r.table('Style')
-        .min({index: 'visited'})('visited').do( function(minVisited) {
+        .max({index: 'generation'})('generation').do( function(currentGen) {
             return {
-                currentGen: r.table('Style').max({index: 'generation'})('generation'),
-                minVisited: minVisited
+                currentGen: currentGen,
+                minVisited: r.table('Style').filter({generation: currentGen}).min('visited')('visited')
             };
         })
         .then(vals => {
@@ -40,7 +41,7 @@ Style.defineStatic('getNext', function(ids) {
                 return Promise.resolve(style);
             } else {
                 logger.error('Failed random selection - fallback to normal');
-                return this.orderBy(r.desc('generation')).orderBy('visited').limit(1).run()
+                return this.orderBy(r.desc('generation'), r.asc('visited')).limit(1).run()
             }
         })
         .then(style => {
